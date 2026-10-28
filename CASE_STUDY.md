@@ -233,7 +233,81 @@ Shaded steps are now automated. People spend their time on the two steps that ne
 
 The score-accuracy field in the shortlist closes the loop: each decision shows whether the score was right, which is the data for tuning the scorer. That makes the process improve itself over time, in line with continuous improvement.
 
-## 10. An agile product role
+## 10. Delivery management
+
+This section sets out how the delivery was planned, tracked and governed. I was the only developer, so most of this was done informally and recorded as I went. The tables below bring those records together in the formats a delivery team would use. Where a practice was not used, the last column of the cadence table says how I would run it in a larger team.
+
+**Milestone plan**
+
+| Milestone | Month (approx.) | Dependency | Status |
+| --- | --- | --- | --- |
+| Scope and scoring model agreed with the sponsor | Feb 2026 | Sponsor and bid team input | Done |
+| MVP: UK portal feeds with keyword scoring | Feb 2026 | Portal API access and rate limits | Done |
+| Search, filters and CSV export | Mar 2026 | MVP data model | Done |
+| EU (TED) and Innovate UK feeds | Mar 2026 | Third-party APIs | Done |
+| Market intelligence on awards and frameworks | Apr 2026 | Award notice data | Done |
+| Shortlist with bid decisions and outcomes | May 2026 | Bid team adoption | Done |
+| AI tender summaries | May 2026 | LLM provider key and billing | Done |
+| Daily digest to Teams and email | Jun 2026 | Teams webhook, Microsoft 365 | Done |
+| Full documentation and onboarding guide | Jul 2026 | Stable v2.0.0 | Done |
+| Handover into company systems | 1 Sep 2026 (fixed deadline) | IT, shared mailbox, GitHub organisation | Done on time |
+
+**RAID log**
+
+| Type | Item | Impact | Action | Owner | Status |
+| --- | --- | --- | --- | --- | --- |
+| Risk | Polling exhausts a portal's API quota | Feed stops; notices missed | Backoff, delays between pages, 30-minute refresh guard | Me | Closed |
+| Risk | Tool depends on one person and one laptop | Business continuity | Move to company GitHub and systems; README and onboarding guide | Me, with IT | Closed |
+| Risk | Credentials committed to the code history | Security exposure | Full history check; secrets kept out; IT-led rotation | Me, with IT | Closed |
+| Risk | Results look right but are wrong | Bad bid decisions | Check every fix against the source notice | Me | Ongoing control |
+| Assumption | Portal APIs and formats stay stable | Ingestion breaks if they change | Per-source health check flags failures | Me | Monitored |
+| Assumption | The team reads the digest each morning | Value depends on use | Digest kept short and relevant; closed notices excluded | Bid team | Holding |
+| Issue | Garbled characters in titles and values | Unreadable records | Fixed decoding at source and repaired cached records | Me | Closed |
+| Issue | Sell2Wales details not parsed | Missing deadlines and values | Targeted extraction from notice text | Me | Closed |
+| Issue | 30-day window missed notices near deadline | Missed opportunities | Window extended to 45 days | Me | Closed |
+| Dependency | Entra ID app registration and admin consent | Power Automate and Graph access | Requested and approved through tenant admin | IT | Closed |
+| Dependency | LLM API key ownership and billing | AI summaries | Identified who owns and pays for the key, for licensing to move onto a company footing | Me, then Commercial Director | Handed to management |
+| Dependency | Portal accounts in personal names | Notifications and resets tied to one person | Re-pointed to a shared team mailbox | Me | Closed |
+
+**Decision log**
+
+| Decision | Reason | Alternative not taken |
+| --- | --- | --- |
+| One data model for every source | All notices scored and compared the same way | Separate handling per portal |
+| API first: dashboard, digest and exports read one API | New outputs added without touching the core | Building each output directly on the database |
+| Exclude closed and awarded notices from the digest | Keep the digest actionable | Sending everything and relying on filters |
+| Prioritise the working code over a tidy-up at handover | What is handed over matches what runs | Refactoring first and risking the deadline |
+| Report where the app secret is stored, never the secret itself | Credential safety | Sharing the secret for convenience |
+
+**Stakeholders and communication**
+
+| Who | Involved in | How they were kept informed |
+| --- | --- | --- |
+| Commercial Director (sponsor) | Scope, priorities, handover, credential decisions | Updates as increments landed; management briefing slides and pipeline report |
+| Business development team | Requirements, testing on live data, feedback | Daily digest; onboarding guide; direct support |
+| Directors and technical leads | Go/no-go use of AI summaries | Briefing slides |
+| IT | Credentials, app registration, secret rotation, shared mailbox | Handover checklist and README |
+| Third parties: portal operators, Microsoft, LLM provider | APIs, rate limits, keys and billing | Built to each provider's terms and limits |
+
+**Governance, checkpoints and handover**
+
+- **Release checkpoint for each increment:** test on live data, check results against source notices, then release to the team.
+- **Reporting:** a shortlist management report gives counts and values by bid decision and outcome for monthly business development reporting.
+- **Handover checkpoint:** a seven-item checklist (section 7) covering code, credentials, documentation, accounts, secrets and automations, completed before the 1 September deadline.
+- **Live service:** the README and onboarding guide let a second person run and support the platform.
+
+**Delivery cadence**
+
+| Practice | What I did | In a delivery team I would |
+| --- | --- | --- |
+| Schedule | Milestones set increment by increment, with one fixed handover deadline | Keep a shared plan with milestones, owners and dependencies, reviewed weekly |
+| Progress tracking | Task log and working increments | Track progress, dependencies and blockers on a board, visible to all |
+| Stand-ups | Not needed as a sole developer | Run short daily stand-ups focused on blockers |
+| Retrospectives | Lessons recorded after each increment (section 8) | Hold a retrospective each sprint and track the actions |
+| Risk and escalation | Raised credential and ownership risks with the sponsor | Keep a RAID log, review it at checkpoints, and escalate early with options |
+| Handover | Checklist and documentation before go-live | Agree acceptance and handover criteria with operations at the start |
+
+## 11. An agile product role
 
 | Product practice | What I did in the Scrum team |
 | --- | --- | --- |
