@@ -176,9 +176,66 @@ The platform turned four separate manual searches into one automated feed that r
 4. **Respect external limits.** Gentler polling worked better than trying to fetch faster.
 5. **Formal user stories would have helped.** Writing them up afterwards showed where clearer acceptance criteria would have saved rework.
 
-## 9. How this maps to an agile product role
+## 9. Value stream analysis
 
-| Product practice | What I did | In a Scrum team I would |
+This is a retrospective value stream map of the tender identification process, produced after delivery to measure the change. The customer is the bid team. The value is a relevant opportunity reaching a bid or no-bid decision in time to respond.
+
+```mermaid
+flowchart TB
+    subgraph before["Before: every step done by hand (about 3 hours a day)"]
+        direction LR
+        b1[Search each portal by hand] --> b2[Read notices to judge strategic fit] --> b3[Create SharePoint folder and metadata] --> b4[Chase approval to bid] --> b5[Send deadline reminders]
+    end
+    subgraph after["After: platform and flows do the routine work"]
+        direction LR
+        a1[Nine sources fetched and scored]:::auto --> a2[Review digest and AI summary] --> a3[Folder set up by a flow]:::auto --> a4[Bid decision logged in shortlist] --> a5[Automatic reminders]:::auto
+    end
+    before --> after
+    classDef auto fill:#dbe8fb,stroke:#2f6fd6,stroke-width:2px
+```
+
+Shaded steps are now automated. People spend their time on the two steps that need judgement: reviewing the shortlist and deciding whether to bid.
+
+**Current state: before the platform**
+
+| Step | How it was done | Waste |
+| --- | --- | --- |
+| Search portals | One person logged in to each portal and searched by keyword, every day | Motion between portals; the same notice read on more than one site |
+| Judge strategic fit | Notices read in full to decide whether they fitted the company's services | Over-processing of irrelevant notices |
+| Folder and metadata | SharePoint folder and metadata created by hand for each tender | Repetitive manual work |
+| Approval to bid | Approval sought informally, with no record of the decision | Waiting; reasons for decisions lost |
+| Deadline reminders | Reminders sent by hand | Risk of a missed deadline |
+
+**What it cost**
+
+- About 3 hours a day across all five steps, every working day.
+- About 15 hours a week, or roughly 690 hours a year, assuming 230 working days a year.
+- Missed opportunities. In one case the company had the capacity to deliver a regional energy generation programme but did not see the tender notice in time. It later delivered the work as a subcontractor, so it earned a smaller share of a project it could have led.
+
+**Future state: with the platform**
+
+| Step | How it is done now | Waste removed |
+| --- | --- | --- |
+| Search portals | Nine sources fetched, deduplicated and scored automatically | Motion, duplicate reading and missed notices |
+| Judge strategic fit | Relevance score and AI summary in the daily digest; people read only the strong matches | Over-processing |
+| Folder and metadata | Created by a Power Automate flow | Repetitive manual work |
+| Approval to bid | Bid decision, confidence and notes recorded in the shortlist | Lost reasons and outcomes |
+| Deadline reminders | Sent automatically by a flow | Missed-deadline risk |
+
+**Measures to track**
+
+| Measure | Before | After |
+| --- | --- | --- |
+| Manual effort | About 3 hours a day | To measure: time spent reviewing the digest and deciding |
+| Lead time from publication to the team seeing a notice | Depended on when someone next checked | Under 24 hours, through the morning digest |
+| Sources covered | Checked one at a time | Nine, every day |
+| Decisions and outcomes recorded | Rarely | Every shortlisted tender |
+
+The score-accuracy field in the shortlist closes the loop: each decision shows whether the score was right, which is the data for tuning the scorer. That makes the process improve itself over time, in line with continuous improvement.
+
+## 10. An agile product role
+
+| Product practice | What I did in the Scrum team |
 | --- | --- | --- |
 | Capturing requirements | Conversations with the bid team and directors; observed the manual process | Run structured workshops and interviews, and record outcomes |
 | User stories and acceptance criteria | Informal specifications and verification checks | Write stories with acceptance criteria agreed before development |
